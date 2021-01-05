@@ -5,12 +5,12 @@ metadata:
   namespace: default
 spec:
   containers:
-   - name: readiness-httpget-container
-     image: wangyanglinux/myapp:v1
-     imagePullPolicy: IfNotPresent
-     readinessProbe:
-      httpGet:
-        port: 80
-        path: /index1.html
-      initialDelaySeconds: 1
-     periodSeconds: 3
+  - name: readiness-httpget-container
+    image: wangyanglinux/myapp:v1
+    imagePullPolicy: IfNotPresent
+    readinessProbe:
+       httpGet:
+         port: 80
+         path: /index1.html
+       initialDelaySeconds: 1
+       periodSeconds: 3
