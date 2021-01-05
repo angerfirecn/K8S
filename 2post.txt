@@ -1,0 +1,5 @@
+kubectl apply -f 2post.yaml
+
+kubectl exec -it lifecycle-demo -t -- /bin/sh
+
+cat usr/share/message

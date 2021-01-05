@@ -1,0 +1,45 @@
+运行：
+kubectl apply -f 2readinessProbe-httpget.yaml
+
+kubectl get pods
+root@CN-LEIZHA-525:/mnt/d/Work/GitHub/K8S# kubectl get pods
+NAME                    READY   STATUS    RESTARTS   AGE
+myapp-pod               1/1     Running   1          12h
+readiness-httpget-pod   0/1     Running   0          47s
+
+运行：
+kubectl exec readiness-httpget-pod -it -- /bin/sh
+cd /usr/share/nginx/html
+ls
+
+echo "123" >> index1.html
+exit
+
+再次运行：
+root@CN-LEIZHA-525:/mnt/d/Work/GitHub/K8S# kubectl get pods
+NAME                    READY   STATUS    RESTARTS   AGE
+myapp-pod               1/1     Running   1          13h
+readiness-httpget-pod   1/1     Running   0          6m8s
+
+
+=======================================================
+
+运行：
+kubectl apply -f 2livenessProbe-exec.yaml
+
+
+再次运行
+kubectl get pods -w
+
+NAME                READY   STATUS    RESTARTS   AGE
+liveness-exec-pod   1/1     Running   0          35s
+liveness-exec-pod   1/1     Running   1          100s
+
+
+=========================================================
+
+kubectl apply -f 2livenessProbe-httpget.yaml 
+
+kubectl exec liveness-httpget-pod -it -- /bin/sh 
+
+rm /usr/share/nginx/html/index.html

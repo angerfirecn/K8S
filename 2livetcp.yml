@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: probe-tcp
+spec:
+  containers:
+  - name: nginx
+    image: wangyanglinux/myapp:v1
+    livenessProbe:
+      initialDelaySeconds: 5
+      timeoutSeconds: 1
+      tcpSocket:
+        port: 8080
+      periodSeconds: 3
