@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: deamonset-example
+  labels:
+    app: daemonset
+spec:
+  selector:
+    matchLabels:
+      name: deamonset-example
+  template:
+    metadata:
+      labels:
+        name: deamonset-example
+    spec:
+      containers:
+      - name: daemonset-example
+        image: wangyanglinux/myapp:v1
