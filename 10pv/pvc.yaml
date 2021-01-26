@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:   #选择器查找nginx标签的pod,为之提供服务
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet  #创建有状态服务
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  serviceName: "nginx"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: hub.atshooter.com/k8s/nginx:v1.0
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]   #这里对应pv上的访问模式
+      storageClassName: "nfs"    #pv的命名空间
+      resources:
+        requests:
+          storage: 1Gi

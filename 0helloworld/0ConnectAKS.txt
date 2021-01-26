@@ -1,7 +1,5 @@
 cd /mnt/d/Work/GitHub/K8S
 
-az login -e AzureCloud
-
 az cloud set --name AzureCloud
 
 az login

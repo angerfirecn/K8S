@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity      #pod名称
+  labels:
+    app: node-affinity-pod   #标签
+spec:
+  containers:   #容器
+  - name: with-node-affinity     #容器名称
+    image: wangyanglinux/nginx:v1.0   #镜像
+  affinity:   #亲和性
+    nodeAffinity:   #node(节点)的亲和性
+      requiredDuringSchedulingIgnoredDuringExecution:   #硬亲和性
+        nodeSelectorTerms:   #亲和方案 
+        - matchExpressions:
+          - key: kubernetes.io/hostname     #键名 这里的key是node节点的标签,可以通过 kubectl get node --show-labels 查看到
+            operator: In     #在
+            values:
+            - aks-agentpool

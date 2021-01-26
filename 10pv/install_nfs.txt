@@ -1,0 +1,10 @@
+yum install -y nfs-common nfs-utils rpcbind
+mkdir /nfsdata
+chmod 666 /nfsdata
+chown nfsnobody /nfsdata
+cat /etc/exports
+/nfsdata *(rw,no_root_squash,no_all_squash,sync)
+systemctl start rpcbind
+systemctl start nfs
+#并且在每个节点都要创建pv对应的挂载文件夹（因为随机分散的节点容器都会挂载）
+mkidr -p /nfs/pv{1..4}
