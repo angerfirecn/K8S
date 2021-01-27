@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: myweb
+spec:
+  replicas: 7
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      nodeName: aks-agentpool-12344548-vmss000001
+      containers:
+      - name: myweb
+        image: wangyanglinux/nginx:v1.0
+        ports:
+        - containerPort: 80
